@@ -12,7 +12,7 @@ object TrConfig {
      * Dirección del servidor de cuentas (el mismo Worker de Cloudflare que usa el launcher de PC),
      * por ejemplo "https://tr-launcher-api.tuusuario.workers.dev". Sin barra final.
      */
-    const val API_URL = ""
+    const val API_URL = "https://tr-launcher-api.tintino12.workers.dev"
 
     /** Única versión de Minecraft disponible. */
     const val MC_VERSION = "1.21.11"

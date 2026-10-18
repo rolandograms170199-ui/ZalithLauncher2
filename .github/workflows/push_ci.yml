@@ -1,9 +1,7 @@
 name: Build CI
 
+# T.R: desactivado para no gastar minutos en cada subida; el APK se compila con tr_apk.yml
 on:
-  push:
-    branches:
-      - '**'
   workflow_dispatch:
 
 jobs:

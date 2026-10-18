@@ -86,6 +86,7 @@ import com.movtery.zalithlauncher.ui.screens.content.elements.ChangeSkinDialog
 import com.movtery.zalithlauncher.ui.screens.content.elements.LocalLoginDialog
 import com.movtery.zalithlauncher.ui.screens.content.elements.LocalLoginOperation
 import com.movtery.zalithlauncher.ui.screens.content.elements.LoginMenuDialog
+import com.movtery.zalithlauncher.ui.screens.content.elements.TrLoginDialog
 import com.movtery.zalithlauncher.ui.screens.content.elements.LoginMenuOperation
 import com.movtery.zalithlauncher.ui.screens.content.elements.MicrosoftLoginOperation
 import com.movtery.zalithlauncher.ui.screens.content.elements.MicrosoftLoginTipDialog
@@ -320,10 +321,16 @@ private fun LoginMenuOperation(
     actions: AccountActions,
     authServers: List<AuthServer>
 ) {
+    //Diálogo de la cuenta T.R: vive fuera del menú para no cerrarse cuando el menú se cierra
+    var showTrLogin by rememberSaveable { mutableStateOf(false) }
+    if (showTrLogin) {
+        TrLoginDialog(onDismissRequest = { showTrLogin = false })
+    }
     when (operation) {
         LoginMenuOperation.None -> {}
         LoginMenuOperation.Login -> {
             LoginMenuDialog(
+                onTrLogin = { showTrLogin = true },
                 onDismissRequest = {
                     actions.onIntent(
                         AccountManageIntent.UpdateLoginMenuOp(LoginMenuOperation.None)

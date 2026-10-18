@@ -29,6 +29,7 @@ import com.movtery.zalithlauncher.game.account.Account
 import com.movtery.zalithlauncher.game.account.AccountsManager
 import com.movtery.zalithlauncher.game.account.auth_server.AuthServerHelper
 import com.movtery.zalithlauncher.game.account.isLocalAccount
+import com.movtery.zalithlauncher.tr.TrGamePrep
 import com.movtery.zalithlauncher.game.account.isMicrosoftAccount
 import com.movtery.zalithlauncher.game.account.isReloginRequired
 import com.movtery.zalithlauncher.game.account.microsoft.validateAccessToken
@@ -171,6 +172,15 @@ class GameLaunchFlow(scope: CoroutineScope) {
                         throw LaunchCheckFailed(account, e)
                     }
                 }
+            }
+
+            //T.R: skins de todos los jugadores, mod de skins e idioma (nunca bloquea el inicio del juego)
+            addTask(
+                icon = R.drawable.ic_extension_outlined,
+                title = androidText("Preparando T.R (skins y español)"),
+                dispatcher = Dispatchers.IO
+            ) { task ->
+                TrGamePrep.prepare(context, version, account) { msg -> task.updateMessage(androidText(msg)) }
             }
 
             //扫描模组列表，开启对应功能

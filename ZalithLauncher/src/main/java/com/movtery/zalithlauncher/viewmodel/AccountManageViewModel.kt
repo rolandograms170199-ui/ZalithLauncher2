@@ -61,6 +61,7 @@ import com.movtery.zalithlauncher.ui.screens.content.elements.AccountOperation
 import com.movtery.zalithlauncher.ui.screens.content.elements.AccountSkinOperation
 import com.movtery.zalithlauncher.ui.screens.content.elements.ChangeCape
 import com.movtery.zalithlauncher.ui.screens.content.elements.ChangeSkin
+import com.movtery.zalithlauncher.tr.uploadOwnSkin
 import com.movtery.zalithlauncher.ui.screens.content.elements.LocalLoginOperation
 import com.movtery.zalithlauncher.ui.screens.content.elements.LoginMenuOperation
 import com.movtery.zalithlauncher.ui.screens.content.elements.MicrosoftLoginOperation
@@ -807,6 +808,13 @@ class AccountManageViewModel @AssistedInject constructor(
                 FileUtils.deleteQuietly(file)
                 AccountsManager.suspendSaveAccount(account)
                 AccountsManager.refreshWardrobe()
+                //Cuenta T.R: se sube la skin al servidor para que todos los jugadores la vean
+                uploadOwnSkin(account)?.let { problem ->
+                    emitError(
+                        androidText(R.string.generic_warning),
+                        androidText("La skin se guardó en tu teléfono, pero no se pudo subir al servidor: $problem")
+                    )
+                }
                 onIntent(
                     AccountManageIntent.UpdateAccountSkinOp(
                         AccountSkinOperation.None

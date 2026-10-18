@@ -87,6 +87,7 @@ import com.movtery.zalithlauncher.ui.base.BaseScreen
 import com.movtery.zalithlauncher.ui.components.BackgroundCard
 import com.movtery.zalithlauncher.ui.components.MarqueeText
 import com.movtery.zalithlauncher.ui.components.ScalingActionButton
+import com.movtery.zalithlauncher.ui.screens.content.elements.TrInstallSection
 import com.movtery.zalithlauncher.ui.components.SkinPreview3D
 import com.movtery.zalithlauncher.ui.guide.GuideKeys
 import com.movtery.zalithlauncher.ui.screens.NestedNavKey
@@ -476,6 +477,8 @@ private fun VersionsContent(
             }
         }
 
+        TrInstallSection()
+
         ScalingActionButton(
             modifier = Modifier
                 .fillMaxWidth()
@@ -488,6 +491,13 @@ private fun VersionsContent(
             content = {
                 MarqueeText(text = stringResource(R.string.main_launch_game))
             }
+        )
+
+        //Exigido por la licencia (GPL-3.0, términos adicionales): indicar que es una versión modificada no oficial
+        androidx.compose.material3.Text(
+            text = "T.R Launcher · Versión modificada NO oficial de Zalith Launcher 2 (GPL-3.0)",
+            style = MaterialTheme.typography.labelSmall,
+            modifier = Modifier.padding(horizontal = 12.dp).padding(bottom = 8.dp)
         )
     }
 }

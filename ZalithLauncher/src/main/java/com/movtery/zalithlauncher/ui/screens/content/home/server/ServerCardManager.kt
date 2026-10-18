@@ -22,6 +22,7 @@ import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 import com.movtery.zalithlauncher.game.version.installed.VersionsManager
 import com.movtery.zalithlauncher.game.version.multiplayer.pingServer
+import com.movtery.zalithlauncher.tr.TrConfig
 import com.movtery.zalithlauncher.game.version.multiplayer.resolve
 import com.movtery.zalithlauncher.ui.screens.content.home.version.VersionCardDir
 import com.movtery.zalithlauncher.ui.screens.content.home.version.VersionCardManager
@@ -148,12 +149,21 @@ object ServerCardManager {
         _cards.value = loadRecords().map { record ->
             ServerCardState(record, ServerCardPingStatus.Loading)
         }
+        //T.R: la primera vez se añaden los servidores de la comunidad como tarjetas
+        seedTrServers()
         //首次解析绑定版本
         recheckVersions()
         //版本列表刷新后同步绑定版本的可用性
         VersionsManager.registerListener {
             recheckVersions()
         }
+    }
+
+    /** T.R: añade una sola vez las tarjetas de los servidores de la comunidad (si las quitas, no vuelven a aparecer). */
+    private fun seedTrServers() {
+        if (mmkv.decodeBool("tr_seeded", false)) return
+        TrConfig.SERVERS.forEach { addCard(it.name, it.address) }
+        mmkv.encode("tr_seeded", true)
     }
 
     /** 指定服务器是否已存在对应卡片 */

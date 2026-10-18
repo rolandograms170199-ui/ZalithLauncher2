@@ -64,8 +64,8 @@ android {
     }
 
     defaultConfig {
-        applicationId = zalithPackageName
-        applicationIdSuffix = ".v2"
+        //T.R: identificador propio de la app (el código sigue en el paquete original)
+        applicationId = "com.trlauncher.android"
         minSdk = 26
         targetSdk = 34
         versionCode = launcherVersionCode
